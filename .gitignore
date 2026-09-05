@@ -35,3 +35,4 @@ dist-ssr
 .git_backup/
 node_modules/
 dist/
+.vercel
