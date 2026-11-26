@@ -14,6 +14,7 @@ import { Navbar } from "@/components/shop/Navbar";
 import { Footer } from "@/components/shop/Footer";
 import { Toaster } from "@/components/ui/sonner";
 import { supabase } from "@/integrations/supabase/client";
+import { handleSupabaseRedirect } from "@/lib/auth-redirect";
 
 function NotFoundComponent() {
   return (
@@ -123,6 +124,11 @@ function RootShell({ children }: { children: ReactNode }) {
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
   const router = useRouter();
+
+  // Restore Supabase session from verification redirect hash
+  useEffect(() => {
+    handleSupabaseRedirect();
+  }, []);
 
   useEffect(() => {
     const { data } = supabase.auth.onAuthStateChange((event) => {
